@@ -5,3 +5,4 @@ ENV MYSQL_USER=medconnect
 ENV MYSQL_PASSWORD=medconnect123
 
 COPY script_formatadoV1.sql /docker-entrypoint-initdb.d/
+COPY script_criar_trigger.sql /docker-entrypoint-initdb.d/

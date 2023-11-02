@@ -3,10 +3,6 @@ DROP DATABASE IF EXISTS medconnect;
 CREATE DATABASE IF NOT EXISTS medconnect;
 USE medconnect;
 
-GRANT ALL PRIVILEGES ON *.* TO 'medconnect'@'%';
-FLUSH PRIVILEGES;
-
--- Crie a tabela Hospital
 CREATE TABLE IF NOT EXISTS Hospital (
     idHospital INT PRIMARY KEY AUTO_INCREMENT,
     nomeFantasia VARCHAR(45) NOT NULL,
@@ -18,27 +14,27 @@ CREATE TABLE IF NOT EXISTS Hospital (
     CONSTRAINT fkHospitalSede FOREIGN KEY (fkHospitalSede) REFERENCES Hospital (idHospital)
 );
 
--- Inserir dados na tabela Hospital
+
 INSERT INTO Hospital (nomeFantasia, CNPJ, razaoSocial, sigla, responsavelLegal, fkHospitalSede) 
 VALUES 
     ('Hospital ABC', '12345678901234', 'ABC Ltda', 'HABC', 'João da Silva', NULL),
     ('Hospital Einstein', '12325678901234', 'Einstein Ltda', 'HEIN', 'Maria Silva', NULL);
 
--- Crie a tabela EscalonamentoFuncionario
+
 CREATE TABLE IF NOT EXISTS EscalonamentoFuncionario (
     idEscalonamento INT PRIMARY KEY AUTO_INCREMENT,
     cargo VARCHAR(45) NOT NULL,
     prioridade INT NOT NULL
 );
 
--- Inserir dados na tabela EscalonamentoFuncionario
+
 INSERT INTO EscalonamentoFuncionario (cargo, prioridade) 
 VALUES 
     ('Atendente', 1),
     ('Engenheiro De Noc', 2),
     ('Admin', 3);
 
--- Crie a tabela Funcionarios
+
 CREATE TABLE IF NOT EXISTS Funcionarios (
     idFuncionarios INT AUTO_INCREMENT,
     nome VARCHAR(45) NOT NULL,
@@ -53,24 +49,24 @@ CREATE TABLE IF NOT EXISTS Funcionarios (
     CONSTRAINT fkEscalonamento FOREIGN KEY (fkEscalonamento) REFERENCES EscalonamentoFuncionario (idEscalonamento)
 );
 
--- Inserir dados na tabela Funcionarios
+
 INSERT INTO Funcionarios (nome, email, CPF, telefone, senha, fkHospital, fkEscalonamento) 
 VALUES 
     ('Kayky', 'kayky@abc.com', '12345678901', '987654321', '123456', 1, 1),
     ('Gabriel', 'gabriel@email.com', '12345678901', '987654321', '123456', 1, 2),
     ('Maria Souza', 'maria@example.com', '12345678901', '987654321', 'senha123', 1, 3);
 
--- Crie a tabela statusRobo
+
 CREATE TABLE IF NOT EXISTS statusRobo (
     idStatus INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45) NOT NULL
 );
 
--- Inserir dados na tabela statusRobo
+
 INSERT INTO statusRobo (nome) 
 VALUES ('Ativo');
 
--- Crie a tabela RoboCirurgiao
+
 CREATE TABLE IF NOT EXISTS RoboCirurgiao (
     idRobo INT PRIMARY KEY AUTO_INCREMENT,
     modelo VARCHAR(45) NOT NULL,
@@ -82,11 +78,11 @@ CREATE TABLE IF NOT EXISTS RoboCirurgiao (
     CONSTRAINT fkHospitalRobo FOREIGN KEY (fkHospital) REFERENCES Hospital (idHospital)
 );
 
--- Inserir dados na tabela RoboCirurgiao
+
 INSERT INTO RoboCirurgiao (modelo, fabricacao, fkStatus, fkHospital, idProcess) 
 VALUES ('Modelo A', '2023-09-12', 1, 1, 'B2532B6');
 
--- Crie a tabela associado
+
 CREATE TABLE IF NOT EXISTS associado (
     idAssociado INT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(45),
@@ -96,10 +92,10 @@ CREATE TABLE IF NOT EXISTS associado (
     CONSTRAINT fkHospitalAssociado FOREIGN KEY (fkHospital) REFERENCES Hospital (idHospital)
 );
 
--- Inserir dados na tabela associado
+
 INSERT INTO associado VALUES (null, 'erick@email.com', 1, 1);
 
--- Crie a tabela SalaCirurgiao
+
 CREATE TABLE IF NOT EXISTS SalaCirurgiao (
     idSala INT AUTO_INCREMENT,
     numero VARCHAR(5) NOT NULL,
@@ -110,21 +106,21 @@ CREATE TABLE IF NOT EXISTS SalaCirurgiao (
     CONSTRAINT fkRoboSala FOREIGN KEY (fkRoboSala) REFERENCES robocirurgiao (idRobo)
 );
 
--- Inserir dados na tabela SalaCirurgiao
+
 INSERT INTO SalaCirurgiao (numero, fkHospitalSala, fkRoboSala) 
 VALUES ('101', 1, 1);
 
--- Crie a tabela categoriaCirurgia
+
 CREATE TABLE IF NOT EXISTS categoriaCirurgia (
     idCategoria INT PRIMARY KEY AUTO_INCREMENT,
     niveisPericuloridade VARCHAR(45) NOT NULL
 );
 
--- Inserir dados na tabela categoriaCirurgia
+
 INSERT INTO categoriaCirurgia (niveisPericuloridade) 
 VALUES ('Alto');
 
--- Crie a tabela cirurgia
+
 CREATE TABLE IF NOT EXISTS cirurgia (
     idCirurgia INT NOT NULL,
     fkRoboCirurgia INT,
@@ -134,11 +130,10 @@ CREATE TABLE IF NOT EXISTS cirurgia (
     CONSTRAINT fkCategoria FOREIGN KEY (fkCategoria) REFERENCES categoriaCirurgia (idCategoria)
 );
 
--- Inserir dados na tabela cirurgia
 INSERT INTO cirurgia (idCirurgia, fkRoboCirurgia, dataHorario, fkCategoria) 
 VALUES (1, 1, '2023-09-15 14:00:00', 1);
 
--- Crie a tabela Metrica
+
 CREATE TABLE IF NOT EXISTS Metrica (
     idMetrica INT PRIMARY KEY AUTO_INCREMENT,
     alerta DOUBLE,
@@ -150,26 +145,26 @@ CREATE TABLE IF NOT EXISTS Metrica (
     tipo_dado VARCHAR(50)
 );
 
--- Inserir dados na tabela Metrica
+
 INSERT INTO Metrica (alerta, urgente, critico, tipo_dado) VALUES
     (0.60, 0.70, 0.80, 'Porcentagem de Uso'),
     (0.901, 0.93, 0.95, 'Porcentagem de Uso'),
     (0.70, 0.80, 0.90, 'Porcentagem de Uso');
 
--- Crie a tabela categoriaComponente
+
 CREATE TABLE IF NOT EXISTS categoriaComponente (
     idCategoriaComponente INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45) NOT NULL
 );
 
--- Inserir dados na tabela categoriaComponente
+
 INSERT INTO categoriaComponente (idCategoriaComponente, nome) VALUES
     (1, 'CPU'),
     (2, 'Memória RAM'),
     (3, 'Disco'),
     (4, 'Rede');
 
--- Crie a tabela componentes
+
 CREATE TABLE IF NOT EXISTS componentes (
     idComponentes INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45) NOT NULL,
@@ -187,7 +182,6 @@ VALUES ('Porcentagem da CPU', "%", 1, 1),
 ("Tempo no sistema da CPU", "s", 1, null),
 ("Processos da CPU", null, 1, null);
 
--- Inserir Memória RAM
 INSERT INTO componentes (nome, unidade, fkCategoriaComponente, fkMetrica) 
 VALUES ('Porcentagem da Memoria', '%', 2, 2),
 ('Total da Memoria', 'GB', 2, null),
@@ -195,7 +189,6 @@ VALUES ('Porcentagem da Memoria', '%', 2, 2),
 ('Porcentagem da Memoria Swap', '%',2,null),
 ('Uso da Memoria Swap', 'GB', 2, null);
 
--- Inserir Disco
 INSERT INTO componentes (nome, unidade, fkCategoriaComponente, fkMetrica) 
 VALUES ('Porcentagem do Disco', '%', 3, 3),
 ('Total do Disco', 'GB', 3, null),
@@ -203,7 +196,6 @@ VALUES ('Porcentagem do Disco', '%', 3, 3),
 ('Tempo de Leitura do Disco', 's', 3, null),
 ('Tempo de Escrita do Disco', 's', 3, null);
 
--- Inserir Rede
 INSERT INTO componentes (nome, descricaoAdd, fkCategoriaComponente) 
 VALUES ('Status da Rede', 'Conexao da Rede', 4),
 ("Latencia de Rede", 'Latencia em MS', 4),
@@ -211,7 +203,7 @@ VALUES ('Status da Rede', 'Conexao da Rede', 4),
 ('Bytes recebidos','Bytes recebidos da Rede', 4);
 
 
--- Inserir Disco
+
 INSERT INTO componentes (nome, unidade, fkCategoriaComponente, fkMetrica) 
 VALUES 
 ('Total do Disco', 'GB', 3, null),
@@ -219,7 +211,7 @@ VALUES
 ('Tempo de Leitura do Disco', 's', 3, null),
 ('Tempo de Escrita do Disco', 's', 3, null);
 
--- Inserir Rede
+
 INSERT INTO componentes (nome, descricaoAdd, fkCategoriaComponente) 
 VALUES ('Status da Rede', 'Conexao da Rede', 4),
 ("Latencia de Rede", 'Latencia em MS', 4),
@@ -227,7 +219,7 @@ VALUES ('Status da Rede', 'Conexao da Rede', 4),
 ('Bytes recebidos','Bytes recebidos da Rede', 4);
 
 
-SELECT * FROM componentes;
+
 CREATE TABLE dispositivos_usb (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255),
@@ -239,7 +231,7 @@ CREATE TABLE dispositivos_usb (
 constraint fkRoboUsb foreign key (fkRoboUsb) references  RoboCirurgiao(idRobo)
 );
 
--- Crie a tabela Registros
+
 CREATE TABLE IF NOT EXISTS Registros (
     idRegistro INT AUTO_INCREMENT,
     fkRoboRegistro INT,
@@ -251,7 +243,7 @@ CREATE TABLE IF NOT EXISTS Registros (
     CONSTRAINT fkComponente FOREIGN KEY (fkComponente) REFERENCES componentes (idComponentes)
 );
 
--- Crie a tabela Alerta
+
 CREATE TABLE IF NOT EXISTS Alerta (
     idAlerta INT PRIMARY KEY AUTO_INCREMENT,
     tipo_alerta VARCHAR(15),
@@ -262,96 +254,12 @@ CREATE TABLE IF NOT EXISTS Alerta (
     dado DOUBLE
 );
 
--- Crie a tabela quantidadeAlerta
+
 CREATE TABLE IF NOT EXISTS quantidadeAlerta (
     idQuantidadeAlerta INT PRIMARY KEY AUTO_INCREMENT,
     tipo_alerta VARCHAR(10),
     dtHora DATETIME
 );
 
--- Crie o gatilho criarAlerta
-DELIMITER $$
-CREATE TRIGGER criarAlerta
-AFTER INSERT ON Registros
-FOR EACH ROW
-BEGIN
-    DECLARE id_metrica INT;
-    DECLARE v_alerta DOUBLE;
-    DECLARE v_urgente DOUBLE;
-    DECLARE v_critico DOUBLE;
-    DECLARE v_componente VARCHAR(45);
-
-    SELECT fkMetrica, nome INTO id_metrica, v_componente
-    FROM componentes
-    WHERE NEW.fkComponente = idComponentes;
-
-    SELECT critico, urgente, alerta INTO v_critico, v_urgente, v_alerta
-    FROM Metrica
-    WHERE idMetrica = id_metrica;
-
-    IF NEW.dado >= v_critico THEN
-        INSERT INTO Alerta (tipo_alerta, fkRegistro, fkRobo, dtHora, nome_componente, dado)
-        VALUES ('critico', NEW.idRegistro, NEW.fkRoboRegistro, NOW(), v_componente, NEW.dado);
-    ELSEIF NEW.dado >= v_urgente THEN
-        INSERT INTO Alerta (tipo_alerta, fkRegistro, fkRobo, dtHora, nome_componente, dado)
-        VALUES ('urgente', NEW.idRegistro, NEW.fkRoboRegistro, NOW(), v_componente, NEW.dado);
-    ELSEIF NEW.dado >= v_alerta THEN
-        INSERT INTO Alerta (tipo_alerta, fkRegistro, fkRobo, dtHora, nome_componente, dado)
-        VALUES ('alerta', NEW.idRegistro, NEW.fkRoboRegistro, NOW(), v_componente, NEW.dado);
-    END IF;
-END;
-$$ DELIMITER ;
-
--- Crie o procedimento inserir_qtd_alerta
-DELIMITER $$
-CREATE PROCEDURE inserir_qtd_alerta()
-BEGIN
-DECLARE qtdAlertaAlerta INT;
-DECLARE qtdAlertaUrgente INT;
-DECLARE qtdAlertaCritico INT;
-    
-SELECT COUNT(idAlerta) FROM Alerta
-WHERE tipo_alerta = "alerta" 
-AND dtHora <= date_sub(now(), INTERVAL 1 MINUTE)
-INTO qtdAlertaAlerta;
-    
-SELECT COUNT(idAlerta) FROM Alerta
-WHERE tipo_alerta = "urgente" 
-AND dtHora <= date_sub(now(), INTERVAL 1 MINUTE)
-INTO qtdAlertaUrgente;
-    
-SELECT COUNT(idAlerta) FROM Alerta
-WHERE tipo_alerta = "critico" 
-AND dtHora <= date_sub(now(), INTERVAL 1 MINUTE)
-INTO qtdAlertaCritico;
-    
-IF qtdAlertaAlerta > 15 THEN
-INSERT INTO quantidadeAlerta (tipo_alerta, dtHora)
-VALUES ("alerta", now());
-END IF;
-    
-IF qtdAlertaUrgente > 15 THEN
-INSERT INTO quantidadeAlerta (tipo_alerta, dtHora) 
-VALUES ("urgente", now());
-END IF;
-    
-IF qtdAlertaCritico > 15 THEN
-INSERT INTO quantidadeAlerta (tipo_alerta, dtHora) 
-VALUES ("critico", now());
-END IF;
-    
-END;
- $$ DELIMITER ;
-
-DELIMITER $$
-CREATE PROCEDURE inserir_dados()
-BEGIN
-INSERT INTO Registros VALUES 
-(null, 1, now(), 0.98, 1),
-(null, 1, now(), 0.6, 1),
-(null, 1, now(), 0.7, 1);
-END;
-$$ DELIMITER 
-
--- Mostrar as tabelas do banco de dados
-SHOW TABLES;
+GRANT ALL PRIVILEGES ON *.* TO 'medconnect'@'%';
+FLUSH PRIVILEGES;
