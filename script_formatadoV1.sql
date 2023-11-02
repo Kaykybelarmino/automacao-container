@@ -3,6 +3,9 @@ DROP DATABASE IF EXISTS medconnect;
 CREATE DATABASE IF NOT EXISTS medconnect;
 USE medconnect;
 
+GRANT ALL PRIVILEGES ON *.* TO 'medconnect'@'%';
+FLUSH PRIVILEGES;
+
 -- Crie a tabela Hospital
 CREATE TABLE IF NOT EXISTS Hospital (
     idHospital INT PRIMARY KEY AUTO_INCREMENT,
