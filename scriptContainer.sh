@@ -7,11 +7,11 @@ sudo systemctl enable docker
 sudo docker pull mysql
 sudo docker volume create volume-mysql
 sudo docker image build -t mysql-image -f mysql.dockerfile . 
-sudo docker run -d -p 3306:3306 --name container-mysql -v "volume-mysql:/var/lib/mysql" mysql-image 
+sudo docker run -d -p 3306:3306 --network host --name container-mysql -v "volume-mysql:/var/lib/mysql" mysql-image 
 sudo docker start container-mysql
 sudo docker image build -t java-image -f java.dockerfile .
-sudo docker run -d -p 90:90 --name container-java java-image 
-sudo docker exec container-java java -jar app.jar
+sudo docker run -d -p 90:90 --network host --name container-java java-image 
+sudo docker exec container-java java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 
 
