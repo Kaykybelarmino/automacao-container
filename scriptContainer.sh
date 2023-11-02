@@ -6,6 +6,6 @@ sudo docker pull mysql
 sudo docker volume create volume-mysql 
 sudo docker run -d -p 3306:3306 --name container-mysql -v "volume-mysql:/var/lib/mysql" -e "MYSQL_ROOT_PASSWORD=segredo" mysql 
 sudo docker cp script_formatadoV1.sql "container-mysql:script_formatadoV1.sql"
-docker exec container-mysql mysql -u root -psegredo -e "CREATE USER 'medconnect'@'%' IDENTIFIED BY 'medconnect123';" && docker exec container-mysql mysql -u root -psegredo -e "GRANT ALL PRIVILEGES ON *.* TO 'medconnect'@'%' WITH GRANT OPTION;" && docker exec container-mysql mysql -u root -psegredo < /script_formatadoV1.sql
+sudo docker exec container-mysql mysql -u root -psegredo -e "CREATE USER 'medconnect'@'%'IDENTIFIED BY 'medconnect123';" && sudo docker exec container-mysql mysql -u root -psegredo -e "GRANT ALL PRIVILEGES ON *.* TO 'medconnect'@'%' WITH GRANT OPTION;" && sudo docker exec container-mysql mysql -u root -psegredo < /script_formatadoV1.sql
 sudo docker image build -t java-image -f java.dockerfile .
 sudo docker run --name container-java java-image 
