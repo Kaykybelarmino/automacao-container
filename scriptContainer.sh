@@ -12,7 +12,8 @@ sudo docker connect conexao-mysql container-mysql
 sudo docker start container-mysql
 sudo docker image build -t java-image -f java.dockerfile .
 sudo docker run --network conexao-mysql --name container-java java-image 
-sudo docker exec -i container-java java -jar app.jar 
+sudo docker exec -i container-java java -jar app.jar
+
 
 
 
