@@ -6,7 +6,7 @@ sudo systemctl start docker
 sudo systemctl enable docker
 sudo docker volume create volume-mysql
 sudo docker image build -t mysql-image -f mysql.dockerfile . 
-sudo docker run -d -p 3306:3306 --name container-mysql -v "volume-mysql:/var/lib/mysql" mysql-image
+sudo docker run -d -p 3306:3306 --name container-mysql -h container-mysql -v "volume-mysql:/var/lib/mysql" mysql-image
 sudo docker network create --subnet=192.168.0.0/24 conexao-mysql
 sudo docker network connect --ip=192.168.0.1 conexao-mysql container-mysql
 sudo docker start container-mysql
