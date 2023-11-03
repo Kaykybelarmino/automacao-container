@@ -13,7 +13,7 @@ sudo docker start container-mysql
 sudo docker image build -t java-image -f java.dockerfile .
 sudo docker run --network conexao-mysql --name container-java java-image 
 sudo docker start container-java
-sudo docker exec -i container-java java -jar app.jar
+sudo docker exec -i container-java java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 
 
