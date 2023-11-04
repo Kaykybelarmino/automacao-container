@@ -1,6 +1,8 @@
 #!/bin/bash
 
 sudo apt update -y && sudo apt upgrade -y
+export JAVA_HOME=/usr/bin/java 
+export PATH=$JAVA_HOME/bin:$PATH
 sudo apt install docker.io -y
 sudo systemctl start docker
 sudo systemctl enable docker
@@ -14,13 +16,11 @@ sudo docker run -d --name container-java java-image
 sudo docker network connect conexao-mysql container-java 
 sudo docker start container-mysql
 sudo docker ps 
-export JAVA_HOME=/usr/bin/java 
-export PATH=$JAVA_HOME/bin:$PATH
 
 sleep 3 
 java -jar /home/ubuntu/automacao-container/apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
 
-sudo docker start container-mysql
+
 
 
 
