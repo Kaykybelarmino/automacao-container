@@ -15,10 +15,8 @@ sudo docker image build -t java-image -f java.dockerfile .
 sudo docker run -d --name container-java java-image 
 sudo docker network connect conexao-mysql container-java 
 sudo docker start container-mysql
-sudo docker ps 
 
-sleep 3 
-java -jar /home/ubuntu/automacao-container/apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
+sudo source iniciarApp.sh
 
 
 
