@@ -29,7 +29,6 @@ sudo docker image build -t mysql-image -f mysql.dockerfile .
 echo "Criando container MySQL"
 sudo docker run -d -p 3306:3306 --name container-mysql -v volume-mysql:/var/lib/mysql mysql-image 
 
-
 echo "Instalando automação via macro"
 sudo apt-get install xdotool -y
 
