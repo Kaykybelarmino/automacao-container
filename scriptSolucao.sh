@@ -24,7 +24,7 @@ echo "Criando volume do MySQL"
 sudo docker volume create volume-mysql
 
 echo "Construindo imagem MySQL"
-sudo docker build -t mysql-image -f mysql.dockerfile .
+sudo docker image build -t mysql-image -f mysql.dockerfile .
 
 echo "Instalando automação via macro"
 sudo apt-get install xdotool -y
