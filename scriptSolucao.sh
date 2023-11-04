@@ -30,9 +30,13 @@ echo "Instalando automação via macro"
 sudo apt-get install xdotool -y
 
 echo "Criando container MySQL"
-sudo docker run -d -p 3306:3306 --name container-mysql -v volume-mysql:/var/lib/mysql mysql-image sleep infinity
+sudo docker build -t mysql-image -f mysql.dockerfile .
+sudo docker run -d -p 3306:3306 --name container-mysql -v volume-mysql:/var/lib/mysql mysql-image 
 
+sudo docker stop container-mysql
 sudo docker start container-mysql
+
+sleep 3
 
 sudo java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
 
