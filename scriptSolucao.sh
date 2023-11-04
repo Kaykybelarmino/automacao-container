@@ -33,8 +33,8 @@ sudo docker run -d -p 3306:3306 --name container-mysql -v volume-mysql:/var/lib/
 echo "Instalando automação via macro"
 sudo apt-get install xdotool -y
 
-sudo stop container-mysql
-sudo start container-mysql
+sudo docker stop container-mysql
+sudo docker start container-mysql
 sleep 3
 
 sudo java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
