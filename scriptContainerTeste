@@ -15,6 +15,7 @@ sudo docker image build -t java-image -f java.dockerfile .
 sudo docker run -d --name container-java java-image 
 sudo docker network connect conexao-mysql container-java 
 sudo docker start container-mysql
+chmod 777 iniciarApp.sh
 . iniciarApp.sh
 
 
