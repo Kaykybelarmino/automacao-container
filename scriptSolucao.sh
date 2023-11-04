@@ -34,8 +34,8 @@ echo "Instalando automação via macro"
 sudo apt-get install xdotool -y
 
 sudo stop container-mysql
-sleep 1 
 sudo start container-mysql
+sleep 3
 
 sudo java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
 
