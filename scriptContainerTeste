@@ -15,11 +15,10 @@ sudo docker network connect conexao-mysql container-java
 sudo docker start container-mysql
 sudo docker ps 
 sleep 3 
-java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
+java -jar /home/ubuntu/automacao-container/apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 sudo docker start container-mysql
 
-java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 
 
