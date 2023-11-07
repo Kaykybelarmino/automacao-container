@@ -17,7 +17,7 @@ sudo docker ps
 sudo sudo apt-get install xdotool -y
 sleep 3 
 sudo docker start container-java
-sudo docker exec -i container-java java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
+sudo docker exec -it container-java java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar bash
 
 
 
