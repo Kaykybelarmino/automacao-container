@@ -1,5 +1,4 @@
 #!/bin/bash
-
 sudo apt update -y && sudo apt upgrade -y
 
 java --version
@@ -30,9 +29,4 @@ echo "Criando container MySQL"
 sudo docker run -d -p 3306:3306 --name container-mysql -v volume-mysql:/var/lib/mysql mysql-image 
 
 sudo docker start container-mysql && sudo java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
-
-. scriptExtensao.sh
-
-
-
 
