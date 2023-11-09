@@ -27,7 +27,7 @@ echo "Criando container MySQL"
 sudo docker run -d -p 3306:3306 --name container-mysql -v volume-mysql:/var/lib/mysql -e "MYSQL_ROOT_PASSWORD=segredo" -e "MYSQL_DATABASE=medconnect" mysql:8.0
 sudo docker cp script_formatadoV1.sql "container-mysql:script_formatadoV1.sql"
 sudo docker start container-mysql
-sudo docker exec -e MYSQL_PWD=segredo container-mysql sh -c 'mysql -u root < script_formatadoV1.sql'
+sudo docker exec -i container-mysql sh -c 'MYSQL_PWD=segredo mysql -u root < script_formatadoV1.sql'
 sudo java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 
