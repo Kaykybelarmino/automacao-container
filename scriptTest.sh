@@ -22,7 +22,7 @@ sudo systemctl enable docker
 
 echo "Criando volume do MySQL"
 sudo docker volume create volume-mysql
-sudo docker run -v volume-mysql:/docker-entrypoint-initdb.d/ --name temp-container busybox /bin/sh -c "cp /docker-entrypoint-initdb.d/script_formatadoV1.sql /mnt/"
+sudo docker run -v volume-mysql:/target-volume --name temp-container busybox /bin/sh -c "script_formatadoV1.sql > /target-volume/script_formatadoV1.sql"
 sudo docker rm temp-container
 
 echo "Criando container MySQL" 
