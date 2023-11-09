@@ -24,7 +24,7 @@ echo "Criando volume do MySQL"
 sudo docker volume create volume-mysql
 
 echo "Criando container MySQL"
-sudo docker run -d -p 3306:3306 --name container-mysql -v volume-mysql:/var/lib/mysql -e "MYSQL_ROOT_PASSWORD=segredo" -e "MYSQL_DATABASE=medconnect" mysql:8.0
+sudo docker run -d -p 3306:3306 --name container-mysql -v volume-mysql:/var/lib/mysql -e "MYSQL_ROOT_PASSWORD=segredo"  -e "MYSQL_INITDB_SKIP_TZINFO=yes" -e "MYSQL_DATABASE=medconnect" mysql:8.0 --init-file=script_formatadoV1.sql
 sudo docker cp script_formatadoV1.sql "container-mysql:script_formatadoV1.sql"
 sudo docker start container-mysql
 sudo docker exec -i container-mysql sh -c 'mysql -u root -psegredo < script_formatadoV1.sql'
