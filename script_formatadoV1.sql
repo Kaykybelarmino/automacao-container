@@ -276,7 +276,7 @@ BEGIN
 
     SELECT fkMetrica, nome INTO id_metrica, v_componente
     FROM componentes
-    WHERE NEW.fkComponenteRegistro = idComponentes;
+    WHERE NEW.fkComponente = idComponentes;
 
     SELECT critico, urgente, alerta INTO v_critico, v_urgente, v_alerta
     FROM Metrica
@@ -329,5 +329,4 @@ BEGIN
     
 END;
 $$ DELIMITER ;
-
 
