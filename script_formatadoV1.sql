@@ -261,73 +261,73 @@ CREATE TABLE IF NOT EXISTS quantidadeAlerta (
     dtHora DATETIME
 );
 
-delimiter //
-CREATE TRIGGER criarAlerta
-AFTER INSERT ON Registros
-FOR EACH ROW
-BEGIN
-    DECLARE id_metrica INT;
-    DECLARE v_alerta DOUBLE;
-    DECLARE v_urgente DOUBLE;
-    DECLARE v_critico DOUBLE;
-    DECLARE v_componente VARCHAR(45);
+-- delimiter //
+-- CREATE TRIGGER criarAlerta
+-- AFTER INSERT ON Registros
+-- FOR EACH ROW
+-- BEGIN
+--     DECLARE id_metrica INT;
+--     DECLARE v_alerta DOUBLE;
+--     DECLARE v_urgente DOUBLE;
+--     DECLARE v_critico DOUBLE;
+--     DECLARE v_componente VARCHAR(45);
 
-    SELECT fkMetrica, nome INTO id_metrica, v_componente
-    FROM componentes
-    WHERE NEW.fkComponente = idComponentes;
+--     SELECT fkMetrica, nome INTO id_metrica, v_componente
+--     FROM componentes
+--     WHERE NEW.fkComponente = idComponentes;
 
-    SELECT critico, urgente, alerta INTO v_critico, v_urgente, v_alerta
-    FROM Metrica
-    WHERE idMetrica = id_metrica;
+--     SELECT critico, urgente, alerta INTO v_critico, v_urgente, v_alerta
+--     FROM Metrica
+--     WHERE idMetrica = id_metrica;
 
-    IF NEW.dado >= v_critico THEN
-        INSERT INTO Alerta (tipo_alerta, fkRegistro, fkRobo, dtHora, nome_componente, dado)
-        VALUES ('critico', NEW.idRegistro, NEW.fkRoboRegistro, NOW(), v_componente, NEW.dado);
-    ELSEIF NEW.dado >= v_urgente THEN
-        INSERT INTO Alerta (tipo_alerta, fkRegistro, fkRobo, dtHora, nome_componente, dado)
-        VALUES ('urgente', NEW.idRegistro, NEW.fkRoboRegistro, NOW(), v_componente, NEW.dado);
-    ELSEIF NEW.dado >= v_alerta THEN
-        INSERT INTO Alerta (tipo_alerta, fkRegistro, fkRobo, dtHora, nome_componente, dado)
-        VALUES ('alerta', NEW.idRegistro, NEW.fkRoboRegistro, NOW(), v_componente, NEW.dado);
-    END IF;
-END;
-delimiter ;
+--     IF NEW.dado >= v_critico THEN
+--         INSERT INTO Alerta (tipo_alerta, fkRegistro, fkRobo, dtHora, nome_componente, dado)
+--         VALUES ('critico', NEW.idRegistro, NEW.fkRoboRegistro, NOW(), v_componente, NEW.dado);
+--     ELSEIF NEW.dado >= v_urgente THEN
+--         INSERT INTO Alerta (tipo_alerta, fkRegistro, fkRobo, dtHora, nome_componente, dado)
+--         VALUES ('urgente', NEW.idRegistro, NEW.fkRoboRegistro, NOW(), v_componente, NEW.dado);
+--     ELSEIF NEW.dado >= v_alerta THEN
+--         INSERT INTO Alerta (tipo_alerta, fkRegistro, fkRobo, dtHora, nome_componente, dado)
+--         VALUES ('alerta', NEW.idRegistro, NEW.fkRoboRegistro, NOW(), v_componente, NEW.dado);
+--     END IF;
+-- END;
+-- delimiter ;
 
 
-delimiter //
--- Criação do Procedimento
-CREATE PROCEDURE inserir_qtd_alerta()
-BEGIN
-    DECLARE qtdAlertaAlerta INT;
-    DECLARE qtdAlertaUrgente INT;
-    DECLARE qtdAlertaCritico INT;
+-- delimiter //
+-- -- Criação do Procedimento
+-- CREATE PROCEDURE inserir_qtd_alerta()
+-- BEGIN
+--     DECLARE qtdAlertaAlerta INT;
+--     DECLARE qtdAlertaUrgente INT;
+--     DECLARE qtdAlertaCritico INT;
     
-    SELECT COUNT(idAlerta) INTO qtdAlertaAlerta
-    FROM Alerta
-    WHERE tipo_alerta = 'alerta' AND dtHora <= DATE_SUB(NOW(), INTERVAL 1 MINUTE);
+--     SELECT COUNT(idAlerta) INTO qtdAlertaAlerta
+--     FROM Alerta
+--     WHERE tipo_alerta = 'alerta' AND dtHora <= DATE_SUB(NOW(), INTERVAL 1 MINUTE);
 
-    SELECT COUNT(idAlerta) INTO qtdAlertaUrgente
-    FROM Alerta
-    WHERE tipo_alerta = 'urgente' AND dtHora <= DATE_SUB(NOW(), INTERVAL 1 MINUTE);
+--     SELECT COUNT(idAlerta) INTO qtdAlertaUrgente
+--     FROM Alerta
+--     WHERE tipo_alerta = 'urgente' AND dtHora <= DATE_SUB(NOW(), INTERVAL 1 MINUTE);
 
-    SELECT COUNT(idAlerta) INTO qtdAlertaCritico
-    FROM Alerta
-    WHERE tipo_alerta = 'critico' AND dtHora <= DATE_SUB(NOW(), INTERVAL 1 MINUTE);
+--     SELECT COUNT(idAlerta) INTO qtdAlertaCritico
+--     FROM Alerta
+--     WHERE tipo_alerta = 'critico' AND dtHora <= DATE_SUB(NOW(), INTERVAL 1 MINUTE);
     
-    IF qtdAlertaAlerta > 15 THEN
-        INSERT INTO quantidadeAlerta (tipo_alerta, dtHora) VALUES ('alerta', NOW());
-    END IF;
+--     IF qtdAlertaAlerta > 15 THEN
+--         INSERT INTO quantidadeAlerta (tipo_alerta, dtHora) VALUES ('alerta', NOW());
+--     END IF;
     
-    IF qtdAlertaUrgente > 15 THEN
-        INSERT INTO quantidadeAlerta (tipo_alerta, dtHora) VALUES ('urgente', NOW());
-    END IF;
+--     IF qtdAlertaUrgente > 15 THEN
+--         INSERT INTO quantidadeAlerta (tipo_alerta, dtHora) VALUES ('urgente', NOW());
+--     END IF;
     
-    IF qtdAlertaCritico > 15 THEN
-        INSERT INTO quantidadeAlerta (tipo_alerta, dtHora) VALUES ('critico', NOW());
-    END IF;
+--     IF qtdAlertaCritico > 15 THEN
+--         INSERT INTO quantidadeAlerta (tipo_alerta, dtHora) VALUES ('critico', NOW());
+--     END IF;
     
-END
+-- END
 
-delimiter ;
+-- delimiter ;
 
 
