@@ -33,7 +33,7 @@ while ! docker exec container-mysql mysqladmin ping --silent; do
 done
 
 sudo docker ps -a
-sudo java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5005 -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
+sudo java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 
 
