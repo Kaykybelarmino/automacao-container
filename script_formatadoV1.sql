@@ -262,6 +262,8 @@ CREATE TABLE IF NOT EXISTS quantidadeAlerta (
 );
 
 DELIMITER $$
+
+-- Criação do Trigger
 CREATE TRIGGER criarAlerta
 AFTER INSERT ON Registros
 FOR EACH ROW
@@ -274,7 +276,7 @@ BEGIN
 
     SELECT fkMetrica, nome INTO id_metrica, v_componente
     FROM componentes
-    WHERE NEW.fkComponente = idComponentes;
+    WHERE NEW.fkComponenteRegistro = idComponentes;
 
     SELECT critico, urgente, alerta INTO v_critico, v_urgente, v_alerta
     FROM Metrica
@@ -293,44 +295,39 @@ BEGIN
 END;
 $$ DELIMITER ;
 
--- Crie o procedimento inserir_qtd_alerta
+-- Criação do Procedimento
 DELIMITER $$
 CREATE PROCEDURE inserir_qtd_alerta()
 BEGIN
-DECLARE qtdAlertaAlerta INT;
-DECLARE qtdAlertaUrgente INT;
-DECLARE qtdAlertaCritico INT;
+    DECLARE qtdAlertaAlerta INT;
+    DECLARE qtdAlertaUrgente INT;
+    DECLARE qtdAlertaCritico INT;
     
-SELECT COUNT(idAlerta) FROM Alerta
-WHERE tipo_alerta = "alerta" 
-AND dtHora <= date_sub(now(), INTERVAL 1 MINUTE)
-INTO qtdAlertaAlerta;
+    SELECT COUNT(idAlerta) INTO qtdAlertaAlerta
+    FROM Alerta
+    WHERE tipo_alerta = 'alerta' AND dtHora <= DATE_SUB(NOW(), INTERVAL 1 MINUTE);
+
+    SELECT COUNT(idAlerta) INTO qtdAlertaUrgente
+    FROM Alerta
+    WHERE tipo_alerta = 'urgente' AND dtHora <= DATE_SUB(NOW(), INTERVAL 1 MINUTE);
+
+    SELECT COUNT(idAlerta) INTO qtdAlertaCritico
+    FROM Alerta
+    WHERE tipo_alerta = 'critico' AND dtHora <= DATE_SUB(NOW(), INTERVAL 1 MINUTE);
     
-SELECT COUNT(idAlerta) FROM Alerta
-WHERE tipo_alerta = "urgente" 
-AND dtHora <= date_sub(now(), INTERVAL 1 MINUTE)
-INTO qtdAlertaUrgente;
+    IF qtdAlertaAlerta > 15 THEN
+        INSERT INTO quantidadeAlerta (tipo_alerta, dtHora) VALUES ('alerta', NOW());
+    END IF;
     
-SELECT COUNT(idAlerta) FROM Alerta
-WHERE tipo_alerta = "critico" 
-AND dtHora <= date_sub(now(), INTERVAL 1 MINUTE)
-INTO qtdAlertaCritico;
+    IF qtdAlertaUrgente > 15 THEN
+        INSERT INTO quantidadeAlerta (tipo_alerta, dtHora) VALUES ('urgente', NOW());
+    END IF;
     
-IF qtdAlertaAlerta > 15 THEN
-INSERT INTO quantidadeAlerta (tipo_alerta, dtHora)
-VALUES ("alerta", now());
-END IF;
-    
-IF qtdAlertaUrgente > 15 THEN
-INSERT INTO quantidadeAlerta (tipo_alerta, dtHora) 
-VALUES ("urgente", now());
-END IF;
-    
-IF qtdAlertaCritico > 15 THEN
-INSERT INTO quantidadeAlerta (tipo_alerta, dtHora) 
-VALUES ("critico", now());
-END IF;
+    IF qtdAlertaCritico > 15 THEN
+        INSERT INTO quantidadeAlerta (tipo_alerta, dtHora) VALUES ('critico', NOW());
+    END IF;
     
 END;
- $$ DELIMITER ;
+$$ DELIMITER ;
+
 
