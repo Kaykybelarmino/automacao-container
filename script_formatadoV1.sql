@@ -261,9 +261,7 @@ CREATE TABLE IF NOT EXISTS quantidadeAlerta (
     dtHora DATETIME
 );
 
-DELIMITER $$
-
--- Criação do Trigger
+delimiter //
 CREATE TRIGGER criarAlerta
 AFTER INSERT ON Registros
 FOR EACH ROW
@@ -293,10 +291,11 @@ BEGIN
         VALUES ('alerta', NEW.idRegistro, NEW.fkRoboRegistro, NOW(), v_componente, NEW.dado);
     END IF;
 END;
-$$ DELIMITER ;
+delimiter ;
 
+
+delimiter //
 -- Criação do Procedimento
-DELIMITER $$
 CREATE PROCEDURE inserir_qtd_alerta()
 BEGIN
     DECLARE qtdAlertaAlerta INT;
@@ -327,6 +326,8 @@ BEGIN
         INSERT INTO quantidadeAlerta (tipo_alerta, dtHora) VALUES ('critico', NOW());
     END IF;
     
-END;
-$$ DELIMITER ;
+END
+
+delimiter ;
+
 
