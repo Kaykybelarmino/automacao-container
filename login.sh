@@ -30,7 +30,8 @@ response=$(/opt/mssql-tools/bin/sqlcmd -S $servidor -U $usuario -P $senha -d $ba
 
 if [ $response -eq 1 ]; then
         echo "Login realizado com sucesso!"
-        export LOGIN_ACESSO=$response
+        export EMAIL_USUARIO=$email
+        export SENHA_USUARIO=$senha
 else
         echo "Houve um erro no login, verifique a senha e o email novamente"
 
