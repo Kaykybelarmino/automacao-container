@@ -4,7 +4,7 @@
 	USE medconnect;
 
 	-- Crie a tabela Hospital
-	CREATE TABLE IF NOT EXISTS Hospital (
+	CREATE TABLE IF NOT EXISTS hospital (
 		idHospital INT PRIMARY KEY AUTO_INCREMENT,
 		nomeFantasia VARCHAR(45) NOT NULL,
 		CNPJ CHAR(14) NOT NULL,
@@ -12,11 +12,11 @@
 		sigla VARCHAR(45) NOT NULL,
 		responsavelLegal VARCHAR(45) NOT NULL,
 		fkHospitalSede INT,
-		CONSTRAINT fkHospitalSede FOREIGN KEY (fkHospitalSede) REFERENCES Hospital (idHospital)
+		CONSTRAINT fkHospitalSede FOREIGN KEY (fkHospitalSede) REFERENCES hospital (idHospital)
 	);
 
 	-- Inserir dados na tabela Hospital
-	INSERT INTO Hospital (nomeFantasia, CNPJ, razaoSocial, sigla, responsavelLegal, fkHospitalSede) 
+	INSERT INTO hospital (nomeFantasia, CNPJ, razaoSocial, sigla, responsavelLegal, fkHospitalSede) 
 	VALUES 
 		('Hospital ABC', '12345678901234', 'ABC Ltda', 'HABC', 'João da Silva', NULL),
 		('Hospital Einstein', '12325678901234', 'Einstein Ltda', 'HEIN', 'Maria Silva', NULL);
@@ -46,7 +46,7 @@
 		fkHospital INT,
 		fkEscalonamento INT,
 		PRIMARY KEY (idUsuario, fkHospital),
-		CONSTRAINT fkHospital FOREIGN KEY (fkHospital) REFERENCES Hospital (idHospital),
+		CONSTRAINT fkHospital FOREIGN KEY (fkHospital) REFERENCES hospital (idHospital),
 		CONSTRAINT fkEscalonamento FOREIGN KEY (fkEscalonamento) REFERENCES EscalonamentoUsuario (idEscalonamento)
 	);
 
@@ -77,7 +77,7 @@
 		fkStatus INT,
 		fkHospital INT,
 		CONSTRAINT fkStatus FOREIGN KEY (fkStatus) REFERENCES statusRobo (idStatus),
-		CONSTRAINT fkHospitalRobo FOREIGN KEY (fkHospital) REFERENCES Hospital (idHospital)
+		CONSTRAINT fkHospitalRobo FOREIGN KEY (fkHospital) REFERENCES hospital (idHospital)
 	);
     
     create table if not exists Janela(
@@ -109,7 +109,7 @@
 		fkHospitalSala INT,
 		fkRoboSala INT,
 		PRIMARY KEY (idSala, fkHospitalSala, fkRoboSala),
-		CONSTRAINT fkHospitalSala FOREIGN KEY (fkHospitalSala) REFERENCES Hospital (idHospital),
+		CONSTRAINT fkHospitalSala FOREIGN KEY (fkHospitalSala) REFERENCES hospital (idHospital),
 		CONSTRAINT fkRoboSala FOREIGN KEY (fkRoboSala) REFERENCES RoboCirurgiao (idRobo)
 	);
 
