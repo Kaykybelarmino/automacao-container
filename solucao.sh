@@ -32,7 +32,8 @@ sudo docker run -d -p 3306:3306 --name container-mysql -v volume-mysql:/docker-e
 sleep 15
 #done
 
-java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar $
+nohup java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar > output.log 2>&1 &
+
 sleep 10
 sudo docker image build -t python-image -f python.dockerfile .
 sudo docker run -d -p 80:80 --name container-python python-image  

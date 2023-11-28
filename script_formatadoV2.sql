@@ -109,8 +109,8 @@
 		fkHospitalSala INT,
 		fkRoboSala INT,
 		PRIMARY KEY (idSala, fkHospitalSala, fkRoboSala),
-		CONSTRAINT fkHospitalSala FOREIGN KEY (fkHospitalSala) REFERENCES hospital (idHospital),
-		CONSTRAINT fkRoboSala FOREIGN KEY (fkRoboSala) REFERENCES robocirurgiao (idRobo)
+		CONSTRAINT fkHospitalSala FOREIGN KEY (fkHospitalSala) REFERENCES Hospital (idHospital),
+		CONSTRAINT fkRoboSala FOREIGN KEY (fkRoboSala) REFERENCES RoboCirurgiao (idRobo)
 	);
 
 	-- Inserir dados na tabela SalaCirurgiao
@@ -124,7 +124,7 @@
 	);
 
 	-- Inserir dados na tabela categoriaCirurgia
-	INSERT INTO categoriaCirurgia (niveisPericuloridade) 
+	INSERT INTO categoriaCirurgia (idCategoria, niveisPericuloridade) 
 	VALUES (1,"Muito baixo"),
     (2, "Baixo"),
     (3, "Médio"),
@@ -143,7 +143,7 @@
     CONSTRAINT fkRoboCirurgia FOREIGN KEY (fkRoboCirurgia) REFERENCES RoboCirurgiao (idRobo),
     fkCategoria INT,
     CONSTRAINT fkCategoria FOREIGN KEY (fkCategoria) REFERENCES categoriaCirurgia (idCategoria)
-);
+    );
 
 	-- Inserir dados na tabela cirurgia
 	INSERT INTO cirurgia (idCirurgia, fkRoboCirurgia, dataInicio, nomeMedico, duracao, nomePaciente, tipo, fkCategoria) 
@@ -207,40 +207,40 @@
 	);
     		
 
-INSERT INTO componentes (idComponentes,nome, unidade, fkCategoriaComponente, fkMetrica) 
-VALUES (1,'Porcentagem da CPU', '%', 1, 1),
-(2,'Velocidade da CPU', 'GHz', 1, 11),
-(3,'Tempo no sistema da CPU', 's', 1, null),
-(4,'Processos da CPU', null, 1, 3);
+	INSERT INTO componentes (idComponentes,nome, unidade, fkCategoriaComponente, fkMetrica) 
+	VALUES (1,'Porcentagem da CPU', '%', 1, 1),
+	(2,'Velocidade da CPU', 'GHz', 1, 11),
+	(3,'Tempo no sistema da CPU', 's', 1, null),
+	(4,'Processos da CPU', null, 1, 3);
 
 -- Inserir Memória RAM
-INSERT INTO componentes (idComponentes,nome, unidade, fkCategoriaComponente, fkMetrica) 
-VALUES (5,'Porcentagem da Memoria', '%', 2, 5),
-(6,'Total da Memoria', 'GB', 2, null),
-(7,'Uso da Memoria', 'GB', 2, null),
-(8,'Porcentagem da Memoria Swap', '%',2,6),
-(9,'Uso da Memoria Swap', 'GB', 2, null);
+	INSERT INTO componentes (idComponentes,nome, unidade, fkCategoriaComponente, fkMetrica) 
+	VALUES (5,'Porcentagem da Memoria', '%', 2, 5),
+	(6,'Total da Memoria', 'GB', 2, null),
+	(7,'Uso da Memoria', 'GB', 2, null),
+	(8,'Porcentagem da Memoria Swap', '%',2,6),
+	(9,'Uso da Memoria Swap', 'GB', 2, null);
 
 -- Inserir Disco
-INSERT INTO componentes (idComponentes, nome, unidade, fkCategoriaComponente, fkMetrica) 
-VALUES (10,'Porcentagem do Disco', '%', 3, 8),
-(11,'Total do Disco', 'GB', 3, null),
-(12,'Uso do Disco', 'GB', 3, null),
-(13,'Tempo de Leitura do Disco', 's', 3, null),
-(14,'Tempo de Escrita do Disco', 's', 3, null);
+	INSERT INTO componentes (idComponentes, nome, unidade, fkCategoriaComponente, fkMetrica) 
+	VALUES (10,'Porcentagem do Disco', '%', 3, 8),
+	(11,'Total do Disco', 'GB', 3, null),
+	(12,'Uso do Disco', 'GB', 3, null),
+	(13,'Tempo de Leitura do Disco', 's', 3, null),
+	(14,'Tempo de Escrita do Disco', 's', 3, null);
 
 -- Inserir Rede
-INSERT INTO componentes (idComponentes, nome, descricaoAdd, fkCategoriaComponente, fkMetrica) 
-VALUES (15,'Status da Rede', 'Conexao da Rede', 4, null),
-(16,'Latencia de Rede', 'Latencia em MS', 4, 10),
-(17,'Bytes enviados','Bytes enviados da Rede', 4, null),
-(18,'Bytes recebidos','Bytes recebidos da Rede', 4, null);
+	INSERT INTO componentes (idComponentes, nome, descricaoAdd, fkCategoriaComponente, fkMetrica) 
+	VALUES (15,'Status da Rede', 'Conexao da Rede', 4, null),
+	(16,'Latencia de Rede', 'Latencia em MS', 4, 10),
+	(17,'Bytes enviados','Bytes enviados da Rede', 4, null),
+	(18,'Bytes recebidos','Bytes recebidos da Rede', 4, null);
 
-INSERT INTO componentes (idComponentes, nome, descricaoAdd, fkCategoriaComponente, fkMetrica) 
-VALUES 
-(19,'Total de processos', 'processos', 1, null),
-(20,'Total de Threads', 'threads', 1, null),
-(21,'Quantidade de processos', 'Quantidades de processos em execução', 5, null);
+	INSERT INTO componentes (idComponentes, nome, descricaoAdd, fkCategoriaComponente, fkMetrica) 
+	VALUES 
+	(19,'Total de processos', 'processos', 1, null),
+	(20,'Total de Threads', 'threads', 1, null),
+	(21,'Quantidade de processos', 'Quantidades de processos em execução', 5, null);
 
 
 	CREATE TABLE dispositivos_usb (
@@ -252,7 +252,7 @@ VALUES
 		conectado BOOLEAN,
 		fkRoboUsb int , 
 	constraint fkRoboUsb foreign key (fkRoboUsb) references  RoboCirurgiao(idRobo)
-	);
+		);
 
 	-- Crie a tabela Registros
 	CREATE TABLE IF NOT EXISTS Registros (
