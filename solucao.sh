@@ -4,14 +4,14 @@ sudo apt update -y && sudo apt upgrade -y
 
 java --version
 
-if [ $? -ne 0 ]; then
+if [ $? -gt 0 ]; then
     echo "Inicializando instalação do java"
     sudo apt install openjdk-19-jre-headless -y
 fi
 
 docker --version
 
-if [ $? -ne 0 ]; then
+if [ $? -gt 0 ]; then
     echo "Inicializando instalação do docker"
     sudo apt install docker.io -y
 fi
@@ -32,8 +32,12 @@ sudo docker run -d -p 3306:3306 --name container-mysql -v volume-mysql:/docker-e
 sleep 15
 #done
 
+java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar $
+sleep 10
+sudo docker image build -t python-image -f python.dockerfile .
+sudo docker run -d -p 80:80 --name container-python python-image  
 
-java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
+
 
 
 
