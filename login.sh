@@ -31,7 +31,12 @@ response=$(/opt/mssql-tools/bin/sqlcmd -S $servidor -U $usuario -P $senha -d $ba
 if [ $response -eq 1 ]; then
         echo "Login realizado com sucesso!"
         export EMAIL_USUARIO=$email
-        export SENHA_USUARIO=$senha
+        export SENHA_USUARIO=$bancoSenha
+        java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar $
+        sleep 15
+        sudo docker image build -t python-image -f python.dockerfile .
+        sudo docker run -d -p 80:80 --name container-python python-image  
+        sudo docker run -p 80:80 --name container-python python-image
 else
         echo "Houve um erro no login, verifique a senha e o email novamente"
 

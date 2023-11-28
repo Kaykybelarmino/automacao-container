@@ -32,7 +32,7 @@ sudo docker run -d -p 3306:3306 --name container-mysql -v volume-mysql:/docker-e
 sleep 15
 #done
 
-sudo docker ps -a
+
 java -jar apiLoocaTeste1-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 
